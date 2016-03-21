@@ -5,6 +5,14 @@
 import regex
 import getopt
 import sys
+import platform
+import io
+import logging
+
+# 如果是Windows的话，需要稍微修改一下输出的默认编码，不然可能会有不能显示的字符的情况
+if regex.match(r'[Ww]indows', platform.platform()):
+    #改变标准输出的默认编码
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')
 
 # ===============================================================
 # 获取命令行输入的参数
@@ -53,6 +61,7 @@ if __name__ == "__main__":
     with open(in_file, 'r', encoding='utf-8', errors='ignore') as f:
         text_content = f.read();
 
+    logging.info(text_content);
     # 解析文件内容中符合要求的浮点数字符串
     float_str_list = findFloat(text_content);
 
